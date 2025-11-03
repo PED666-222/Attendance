@@ -1,12 +1,12 @@
 #include "allhead.h"
 
 /*
-Ö¸ÎÆÄ£¿é:¿ÉÒÔ½øĞĞÌí¼ÓÖ¸ÎÆ¡¢ÑéÖ¤Ö¸ÎÆ¡¢»ñÈ¡×ÜÊı¡¢Çå¿ÕÖ¸ÎÆ£¬Í¬Ê±OLEDÏÔÊ¾²Ù×÷£¬Ö¸ÎÆÑéÖ¤³É¹¦·äÃùÆ÷¶ÌÃùÁ½Éù£¬LEDÁÁ£¬Ê§°Ü³¤Ãù£¬LED³¤ÁÁ
-OLED¡¢LED¡¢·äÃùÆ÷¶ÀÁ¢ÈÎÎñ¿ØÖÆ
-±¡Ä¤°´¼ü:°´ÏÂ°´¼ü·äÃùÆ÷¶ÌÃù£¬OLEDÏÔÊ¾°´ÏÂÄÚÈİ
-°´ÏÂKEY1¿¼ÇÚ£¨¶ÀÁ¢ÈÎÎñÔËĞĞ£©
-ÊäÈëÃÜÂëºó£¬°´ÏÂKEY2.3.4·Ö±ğÊµÏÖÌí¼Ó »ñÈ¡×ÜÊı Çå¿ÕÖ¸ÎÆµÄ¹¦ÄÜ£¬Í¨¹ı´®¿Ú1/À¶ÑÀĞŞ¸ÄÊ±¼äºÍÈÕÆÚ£¬²¢ÇÒOLEDÊµÊ±ÏÔÊ¾²Ù×÷
-Òì»ò¼Ó½âÃÜ·¨
+æŒ‡çº¹æ¨¡å—:å¯ä»¥è¿›è¡Œæ·»åŠ æŒ‡çº¹ã€éªŒè¯æŒ‡çº¹ã€è·å–æ€»æ•°ã€æ¸…ç©ºæŒ‡çº¹ï¼ŒåŒæ—¶OLEDæ˜¾ç¤ºæ“ä½œï¼ŒæŒ‡çº¹éªŒè¯æˆåŠŸèœ‚é¸£å™¨çŸ­é¸£ä¸¤å£°ï¼ŒLEDäº®ï¼Œå¤±è´¥é•¿é¸£ï¼ŒLEDé•¿äº®
+OLEDã€LEDã€èœ‚é¸£å™¨ç‹¬ç«‹ä»»åŠ¡æ§åˆ¶
+è–„è†œæŒ‰é”®:æŒ‰ä¸‹æŒ‰é”®èœ‚é¸£å™¨çŸ­é¸£ï¼ŒOLEDæ˜¾ç¤ºæŒ‰ä¸‹å†…å®¹
+æŒ‰ä¸‹KEY1è€ƒå‹¤ï¼ˆç‹¬ç«‹ä»»åŠ¡è¿è¡Œï¼‰
+è¾“å…¥å¯†ç åï¼ŒæŒ‰ä¸‹KEY2.3.4åˆ†åˆ«å®ç°æ·»åŠ  è·å–æ€»æ•° æ¸…ç©ºæŒ‡çº¹çš„åŠŸèƒ½ï¼Œé€šè¿‡ä¸²å£1/è“ç‰™ä¿®æ”¹æ—¶é—´å’Œæ—¥æœŸï¼Œå¹¶ä¸”OLEDå®æ—¶æ˜¾ç¤ºæ“ä½œ
+å¼‚æˆ–åŠ è§£å¯†æ³•
 
 */
 
@@ -31,39 +31,39 @@ TaskHandle_t app_task_atte_handle 	  = NULL;
 TaskHandle_t app_task_mod_handle 	  = NULL;
 TaskHandle_t app_task_show_handle 	  = NULL;
 
-QueueHandle_t g_queue_oled;         //oledÏûÏ¢¶ÓÁĞ
-QueueHandle_t g_queue_rtc; 			//rtcÏûÏ¢¶ÓÁĞ
-QueueHandle_t g_queue_flash; 		//flashÏûÏ¢¶ÓÁĞ
+QueueHandle_t g_queue_oled;         //oledæ¶ˆæ¯é˜Ÿåˆ—
+QueueHandle_t g_queue_rtc; 			//rtcæ¶ˆæ¯é˜Ÿåˆ—
+QueueHandle_t g_queue_flash; 		//flashæ¶ˆæ¯é˜Ÿåˆ—
 
-SemaphoreHandle_t g_mutex_oled;		//oled»¥³âËø
-SemaphoreHandle_t g_mutex_printf;	//printf»¥³âËø
+SemaphoreHandle_t g_mutex_oled;		//oledäº’æ–¥é”
+SemaphoreHandle_t g_mutex_printf;	//printfäº’æ–¥é”
 
-EventGroupHandle_t g_event_group_fpm; //Ö¸ÎÆÊÂ¼ş±êÖ¾×é
-EventGroupHandle_t g_event_group_led; //LEDÊÂ¼ş±êÖ¾×é
-EventGroupHandle_t g_event_group_root;//rootÊÂ¼ş±êÖ¾×é
-EventGroupHandle_t g_event_group_beep;//beepÊÂ¼ş±êÖ¾×é
-EventGroupHandle_t g_event_group_rtc; //rtcÊÂ¼ş±êÖ¾×é
+EventGroupHandle_t g_event_group_fpm; //æŒ‡çº¹äº‹ä»¶æ ‡å¿—ç»„
+EventGroupHandle_t g_event_group_led; //LEDäº‹ä»¶æ ‡å¿—ç»„
+EventGroupHandle_t g_event_group_root;//rootäº‹ä»¶æ ‡å¿—ç»„
+EventGroupHandle_t g_event_group_beep;//beepäº‹ä»¶æ ‡å¿—ç»„
+EventGroupHandle_t g_event_group_rtc; //rtcäº‹ä»¶æ ‡å¿—ç»„
 
 
-/*   ÈÎÎñmenu 	*/ 
+/*   ä»»åŠ¡menu 	*/ 
 static void app_task_init(void* pvParameters);  
-/*   ÈÎÎñoled 	*/ 
+/*   ä»»åŠ¡oled 	*/ 
 static void app_task_oled(void* pvParameters);  
-/* ÈÎÎñkeyboard */ 
+/* ä»»åŠ¡keyboard */ 
 static void app_task_keyboard(void* pvParameters);  
-/*   ÈÎÎñled 	*/
+/*   ä»»åŠ¡led 	*/
 static void app_task_led(void* pvParameters);
-/*   ÈÎÎñroot 	*/
+/*   ä»»åŠ¡root 	*/
 static void app_task_root(void* pvParameters);
-/*   ÈÎÎñatte 	*/
+/*   ä»»åŠ¡atte 	*/
 static void app_task_atte(void* pvParameters);
-/*   ÈÎÎñbeep 	*/
+/*   ä»»åŠ¡beep 	*/
 static void app_task_beep(void* pvParameters);
-/*   ÈÎÎñrtc 	*/
+/*   ä»»åŠ¡rtc 	*/
 static void app_task_rtc(void* pvParameters);  
-/*   ÈÎÎñmod 	*/
+/*   ä»»åŠ¡mod 	*/
 static void app_task_mod(void* pvParameters);
-/* ÈÎÎñshow */ 
+/* ä»»åŠ¡show */ 
 static void app_task_show(void* pvParameters); 
 
 void exceptions_catch(void)
@@ -76,7 +76,7 @@ void exceptions_catch(void)
 	dgb_printf_safe("ICSR=0x%08X\r\n",icsr);
  }
 
- /* OLED»¥³âËø¸ß¶È·â×° */
+ /* OLEDäº’æ–¥é”é«˜åº¦å°è£… */
 #define OLED_SAFE(__CODE)                                \
 	{                                                    \
                                                          \
@@ -98,12 +98,12 @@ void exceptions_catch(void)
 	va_list args;
 	va_start(args, format);
 
-	/* »ñÈ¡»¥³âĞÅºÅÁ¿ */
+	/* è·å–äº’æ–¥ä¿¡å·é‡ */
 	xSemaphoreTake(g_mutex_printf, portMAX_DELAY);
 
 	vprintf(format, args);
 
-	/* ÊÍ·Å»¥³âĞÅºÅÁ¿ */
+	/* é‡Šæ”¾äº’æ–¥ä¿¡å·é‡ */
 	xSemaphoreGive(g_mutex_printf);
 
 	va_end(args);
@@ -114,185 +114,185 @@ void exceptions_catch(void)
 
 int main(void)
 {
-	/* ÉèÖÃÏµÍ³ÖĞ¶ÏÓÅÏÈ¼¶·Ö×é4 */
+	/* è®¾ç½®ç³»ç»Ÿä¸­æ–­ä¼˜å…ˆçº§åˆ†ç»„4 */
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
 	
-	/* ÏµÍ³¶¨Ê±Æ÷ÖĞ¶ÏÆµÂÊÎªconfigTICK_RATE_HZ */
+	/* ç³»ç»Ÿå®šæ—¶å™¨ä¸­æ–­é¢‘ç‡ä¸ºconfigTICK_RATE_HZ */
 	SysTick_Config(SystemCoreClock/configTICK_RATE_HZ);									
 	
-	/* ³õÊ¼»¯´®¿Ú1 */
+	/* åˆå§‹åŒ–ä¸²å£1 */
 	Usart1_Init(115200);  
 
-	/* ´´½¨app_task_menu */
-	xTaskCreate((TaskFunction_t )app_task_init,  			/* ÈÎÎñÈë¿Úº¯Êı */
-			  (const char*    )"app_task_init",				/* ÈÎÎñÃû×Ö */
-			  (uint16_t       )512,  						/* ÈÎÎñÕ»´óĞ¡£¬512×Ö */
-			  (void*          )NULL,						/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-			  (UBaseType_t    )5, 							/* ÈÎÎñµÄÓÅÏÈ¼¶ */
-			  (TaskHandle_t*  )&app_task_init_handle);		/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */ 
+	/* åˆ›å»ºapp_task_menu */
+	xTaskCreate((TaskFunction_t )app_task_init,  			/* ä»»åŠ¡å…¥å£å‡½æ•° */
+			  (const char*    )"app_task_init",				/* ä»»åŠ¡åå­— */
+			  (uint16_t       )512,  						/* ä»»åŠ¡æ ˆå¤§å°ï¼Œ512å­— */
+			  (void*          )NULL,						/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+			  (UBaseType_t    )5, 							/* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+			  (TaskHandle_t*  )&app_task_init_handle);		/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */ 
 
-	/* ¿ªÆôÈÎÎñµ÷¶È */
+	/* å¼€å¯ä»»åŠ¡è°ƒåº¦ */
 	vTaskStartScheduler(); 
 	
 }
 
-static void app_task_init(void* pvParameters)//ÈÎÎñ³õÊ¼»¯
+static void app_task_init(void* pvParameters)//ä»»åŠ¡åˆå§‹åŒ–
 {
-	//LED³õÊ¼»¯
+	//LEDåˆå§‹åŒ–
 	LED_Init();
-	//¾ØÕó¼üÅÌ³õÊ¼»¯
+	//çŸ©é˜µé”®ç›˜åˆå§‹åŒ–
 	key_board_init();
-	//oled³õÊ¼»¯
+	//oledåˆå§‹åŒ–
 	OLED_Init();
-	//oledÇåÆÁ
+	//oledæ¸…å±
 	OLED_Clear();
-	//°´¼ü³õÊ¼»¯
+	//æŒ‰é”®åˆå§‹åŒ–
 	key_init();	
-	//·äÃùÆ÷³õÊ¼»¯
+	//èœ‚é¸£å™¨åˆå§‹åŒ–
 	beep_init();
-	//Ö¸ÎÆÄ£¿é³õÊ¼»¯
+	//æŒ‡çº¹æ¨¡å—åˆå§‹åŒ–
 	fpm_init();
 	
-	/*½âËøFLASH£¬ÔÊĞí²Ù×÷FLASH*/
+	/*è§£é”FLASHï¼Œå…è®¸æ“ä½œFLASH*/
 	FLASH_Unlock();
 
-	/* Çå¿ÕÏàÓ¦µÄ±êÖ¾Î»*/  
+	/* æ¸…ç©ºç›¸åº”çš„æ ‡å¿—ä½*/  
 	FLASH_ClearFlag(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR | 
 				   FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR|FLASH_FLAG_PGSERR); 	
 
-	//³¢ÊÔ»ñÈ¡100Ìõ¼ÇÂ¼
+	//å°è¯•è·å–100æ¡è®°å½•
 	for(i=0;i<100;i++)
 	{
-		//»ñÈ¡´æ´¢µÄ¼ÇÂ¼
+		//è·å–å­˜å‚¨çš„è®°å½•
 		flash_read_record(save_buf,i);
 		
-		//¼ì²é¼ÇÂ¼ÊÇ·ñ´æÔÚ»»ĞĞ·ûºÅ£¬²»´æÔÚÔò²»´òÓ¡Êä³ö
+		//æ£€æŸ¥è®°å½•æ˜¯å¦å­˜åœ¨æ¢è¡Œç¬¦å·ï¼Œä¸å­˜åœ¨åˆ™ä¸æ‰“å°è¾“å‡º
 		if(strstr((const char *)save_buf,"\n")==0)
 			break;		
 		
 	}	
 	rec_cnt=i;
 	
-	//rtc³õÊ¼»¯
+	//rtcåˆå§‹åŒ–
 	rtc_init();
-	//À¶ÑÀ´®¿Ú³õÊ¼»¯
+	//è“ç‰™ä¸²å£åˆå§‹åŒ–
 	//Usart3_Init(9600);	
 	
-	//´´½¨»¥³âËø
+	//åˆ›å»ºäº’æ–¥é”
 	g_mutex_oled   = xSemaphoreCreateMutex();
 	g_mutex_printf = xSemaphoreCreateMutex();
 	
-	//´´½¨ÏûÏ¢¶ÓÁĞ
+	//åˆ›å»ºæ¶ˆæ¯é˜Ÿåˆ—
 	g_queue_oled = xQueueCreate(16,sizeof(oled_t));	
 	g_queue_rtc  = xQueueCreate(5,64);
 	
-	//´´½¨ÊÂ¼ş±êÖ¾×é
+	//åˆ›å»ºäº‹ä»¶æ ‡å¿—ç»„
 	g_event_group_rtc=xEventGroupCreate();
 	g_event_group_led=xEventGroupCreate();
 	g_event_group_fpm=xEventGroupCreate();
 	g_event_group_root=xEventGroupCreate();
 	g_event_group_beep=xEventGroupCreate();
 	
-	printf("-----------------»¶Ó­½øÈë¿¼ÇÚ»ú-----------------\n");
+	printf("-----------------æ¬¢è¿è¿›å…¥è€ƒå‹¤æœº-----------------\n");
 
-	/* ´´½¨app_task_oledÈÎÎñ */
-	xTaskCreate((TaskFunction_t )app_task_oled,  			/* ÈÎÎñÈë¿Úº¯Êı */
-			  (const char*    )"app_task_oled",				/* ÈÎÎñÃû×Ö */
-			  (uint16_t       )512,  						/* ÈÎÎñÕ»´óĞ¡£¬512×Ö */
-			  (void*          )NULL,						/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-			  (UBaseType_t    )5, 							/* ÈÎÎñµÄÓÅÏÈ¼¶ */
-			  (TaskHandle_t*  )&app_task_oled_handle);		/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */ 
+	/* åˆ›å»ºapp_task_oledä»»åŠ¡ */
+	xTaskCreate((TaskFunction_t )app_task_oled,  			/* ä»»åŠ¡å…¥å£å‡½æ•° */
+			  (const char*    )"app_task_oled",				/* ä»»åŠ¡åå­— */
+			  (uint16_t       )512,  						/* ä»»åŠ¡æ ˆå¤§å°ï¼Œ512å­— */
+			  (void*          )NULL,						/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+			  (UBaseType_t    )5, 							/* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+			  (TaskHandle_t*  )&app_task_oled_handle);		/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */ 
 			  
-	/* ´´½¨app_task_keyboardÈÎÎñ */
-	xTaskCreate((TaskFunction_t )app_task_keyboard,  		/* ÈÎÎñÈë¿Úº¯Êı */
-			  (const char*    )"app_task_keyboard",			/* ÈÎÎñÃû×Ö */
-			  (uint16_t       )512,  						/* ÈÎÎñÕ»´óĞ¡£¬512×Ö */
-			  (void*          )NULL,						/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-			  (UBaseType_t    )5, 							/* ÈÎÎñµÄÓÅÏÈ¼¶ */
-			  (TaskHandle_t*  )&app_task_keyboard_handle);	/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */ 
+	/* åˆ›å»ºapp_task_keyboardä»»åŠ¡ */
+	xTaskCreate((TaskFunction_t )app_task_keyboard,  		/* ä»»åŠ¡å…¥å£å‡½æ•° */
+			  (const char*    )"app_task_keyboard",			/* ä»»åŠ¡åå­— */
+			  (uint16_t       )512,  						/* ä»»åŠ¡æ ˆå¤§å°ï¼Œ512å­— */
+			  (void*          )NULL,						/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+			  (UBaseType_t    )5, 							/* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+			  (TaskHandle_t*  )&app_task_keyboard_handle);	/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */ 
 			  
-	/* ´´½¨app_task_ledÈÎÎñ */		  
-	xTaskCreate((TaskFunction_t )app_task_led,  			/* ÈÎÎñÈë¿Úº¯Êı */
-			  (const char*    )"app_task_led",				/* ÈÎÎñÃû×Ö */
-			  (uint16_t       )512,  						/* ÈÎÎñÕ»´óĞ¡ */
-			  (void*          )NULL,						/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-			  (UBaseType_t    )5, 							/* ÈÎÎñµÄÓÅÏÈ¼¶ */
-			  (TaskHandle_t*  )&app_task_led_handle);		/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */ 
+	/* åˆ›å»ºapp_task_ledä»»åŠ¡ */		  
+	xTaskCreate((TaskFunction_t )app_task_led,  			/* ä»»åŠ¡å…¥å£å‡½æ•° */
+			  (const char*    )"app_task_led",				/* ä»»åŠ¡åå­— */
+			  (uint16_t       )512,  						/* ä»»åŠ¡æ ˆå¤§å° */
+			  (void*          )NULL,						/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+			  (UBaseType_t    )5, 							/* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+			  (TaskHandle_t*  )&app_task_led_handle);		/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */ 
 
-	/* ´´½¨app_task_rootÈÎÎñ */		  
-	xTaskCreate((TaskFunction_t )app_task_root,  			/* ÈÎÎñÈë¿Úº¯Êı */
-			  (const char*    )"app_task_root",				/* ÈÎÎñÃû×Ö */
-			  (uint16_t       )512,  						/* ÈÎÎñÕ»´óĞ¡ */
-			  (void*          )NULL,						/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-			  (UBaseType_t    )5, 							/* ÈÎÎñµÄÓÅÏÈ¼¶ */
-			  (TaskHandle_t*  )&app_task_root_handle);		/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */ 
+	/* åˆ›å»ºapp_task_rootä»»åŠ¡ */		  
+	xTaskCreate((TaskFunction_t )app_task_root,  			/* ä»»åŠ¡å…¥å£å‡½æ•° */
+			  (const char*    )"app_task_root",				/* ä»»åŠ¡åå­— */
+			  (uint16_t       )512,  						/* ä»»åŠ¡æ ˆå¤§å° */
+			  (void*          )NULL,						/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+			  (UBaseType_t    )5, 							/* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+			  (TaskHandle_t*  )&app_task_root_handle);		/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */ 
 			  
-	/* ´´½¨app_task_atteÈÎÎñ */		  
-	xTaskCreate((TaskFunction_t )app_task_atte,  			/* ÈÎÎñÈë¿Úº¯Êı */
-			  (const char*    )"app_task_atte",				/* ÈÎÎñÃû×Ö */
-			  (uint16_t       )512,  						/* ÈÎÎñÕ»´óĞ¡ */
-			  (void*          )NULL,						/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-			  (UBaseType_t    )5, 							/* ÈÎÎñµÄÓÅÏÈ¼¶ */
-			  (TaskHandle_t*  )&app_task_atte_handle);		/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */
+	/* åˆ›å»ºapp_task_atteä»»åŠ¡ */		  
+	xTaskCreate((TaskFunction_t )app_task_atte,  			/* ä»»åŠ¡å…¥å£å‡½æ•° */
+			  (const char*    )"app_task_atte",				/* ä»»åŠ¡åå­— */
+			  (uint16_t       )512,  						/* ä»»åŠ¡æ ˆå¤§å° */
+			  (void*          )NULL,						/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+			  (UBaseType_t    )5, 							/* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+			  (TaskHandle_t*  )&app_task_atte_handle);		/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */
 			  
-	/* ´´½¨app_task_beepÈÎÎñ */		  
-	xTaskCreate((TaskFunction_t )app_task_beep,  			/* ÈÎÎñÈë¿Úº¯Êı */
-			  (const char*    )"app_task_beep",				/* ÈÎÎñÃû×Ö */
-			  (uint16_t       )512,  						/* ÈÎÎñÕ»´óĞ¡ */
-			  (void*          )NULL,						/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-			  (UBaseType_t    )5, 							/* ÈÎÎñµÄÓÅÏÈ¼¶ */
-			  (TaskHandle_t*  )&app_task_beep_handle);		/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */ 
+	/* åˆ›å»ºapp_task_beepä»»åŠ¡ */		  
+	xTaskCreate((TaskFunction_t )app_task_beep,  			/* ä»»åŠ¡å…¥å£å‡½æ•° */
+			  (const char*    )"app_task_beep",				/* ä»»åŠ¡åå­— */
+			  (uint16_t       )512,  						/* ä»»åŠ¡æ ˆå¤§å° */
+			  (void*          )NULL,						/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+			  (UBaseType_t    )5, 							/* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+			  (TaskHandle_t*  )&app_task_beep_handle);		/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */ 
 
-	/* ´´½¨app_task_rtcÈÎÎñ */
-	xTaskCreate((TaskFunction_t )app_task_rtc,  			/* ÈÎÎñÈë¿Úº¯Êı */
-			  (const char*    )"app_task_rtc",				/* ÈÎÎñÃû×Ö */
-			  (uint16_t       )512,  						/* ÈÎÎñÕ»´óĞ¡£¬512×Ö */
-			  (void*          )NULL,						/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-			  (UBaseType_t    )5, 							/* ÈÎÎñµÄÓÅÏÈ¼¶ */
-			  (TaskHandle_t*  )&app_task_rtc_handle);		/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */ 
+	/* åˆ›å»ºapp_task_rtcä»»åŠ¡ */
+	xTaskCreate((TaskFunction_t )app_task_rtc,  			/* ä»»åŠ¡å…¥å£å‡½æ•° */
+			  (const char*    )"app_task_rtc",				/* ä»»åŠ¡åå­— */
+			  (uint16_t       )512,  						/* ä»»åŠ¡æ ˆå¤§å°ï¼Œ512å­— */
+			  (void*          )NULL,						/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+			  (UBaseType_t    )5, 							/* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+			  (TaskHandle_t*  )&app_task_rtc_handle);		/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */ 
 
-	/* ´´½¨app_task_modÈÎÎñ */
-	xTaskCreate((TaskFunction_t )app_task_mod,  			/* ÈÎÎñÈë¿Úº¯Êı */
-			  (const char*    )"app_task_mod",				/* ÈÎÎñÃû×Ö */
-			  (uint16_t       )512,  						/* ÈÎÎñÕ»´óĞ¡£¬512×Ö */
-			  (void*          )NULL,						/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-			  (UBaseType_t    )5, 							/* ÈÎÎñµÄÓÅÏÈ¼¶ */
-			  (TaskHandle_t*  )&app_task_mod_handle);		/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */
+	/* åˆ›å»ºapp_task_modä»»åŠ¡ */
+	xTaskCreate((TaskFunction_t )app_task_mod,  			/* ä»»åŠ¡å…¥å£å‡½æ•° */
+			  (const char*    )"app_task_mod",				/* ä»»åŠ¡åå­— */
+			  (uint16_t       )512,  						/* ä»»åŠ¡æ ˆå¤§å°ï¼Œ512å­— */
+			  (void*          )NULL,						/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+			  (UBaseType_t    )5, 							/* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+			  (TaskHandle_t*  )&app_task_mod_handle);		/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */
  
-	/* ´´½¨app_task_showÈÎÎñ */
-	xTaskCreate((TaskFunction_t )app_task_show,  		/* ÈÎÎñÈë¿Úº¯Êı */
-			  (const char*    )"app_task_show",			/* ÈÎÎñÃû×Ö */
-			  (uint16_t       )512,  				/* ÈÎÎñÕ»´óĞ¡£¬512×Ö */
-			  (void*          )NULL,				/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-			  (UBaseType_t    )5, 					/* ÈÎÎñµÄÓÅÏÈ¼¶ */
-			  (TaskHandle_t*  )&app_task_show_handle);	/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */ 			  
+	/* åˆ›å»ºapp_task_showä»»åŠ¡ */
+	xTaskCreate((TaskFunction_t )app_task_show,  		/* ä»»åŠ¡å…¥å£å‡½æ•° */
+			  (const char*    )"app_task_show",			/* ä»»åŠ¡åå­— */
+			  (uint16_t       )512,  				/* ä»»åŠ¡æ ˆå¤§å°ï¼Œ512å­— */
+			  (void*          )NULL,				/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+			  (UBaseType_t    )5, 					/* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+			  (TaskHandle_t*  )&app_task_show_handle);	/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */ 			  
 
 			  
 	OLED_ShowString(38,2,(u8 *)"K1",16);
-	OLED_ShowCHinese(54,2,0);//¿¼
-	OLED_ShowCHinese(70,2,1);//ÇÚ	
+	OLED_ShowCHinese(54,2,0);//è€ƒ
+	OLED_ShowCHinese(70,2,1);//å‹¤
 	OLED_ShowString(0,4,(u8 *)"Code Enter ROOT",16);
 	OLED_ShowString(64,6,(u8 *)"by",16);
-	OLED_ShowCHinese(80,6,26); //Íõ
-	OLED_ShowCHinese(96,6,27); //Ò»
-	OLED_ShowCHinese(112,6,28);//æÃ			  
+	OLED_ShowCHinese(80,6,26); //
+	OLED_ShowCHinese(96,6,27); //
+	OLED_ShowCHinese(112,6,28);//			  
 	
 
-	/* É¾³ıÈÎÎñ×ÔÉí */
+	/* åˆ é™¤ä»»åŠ¡è‡ªèº« */
 	vTaskDelete(NULL);			  
 }  
 
 
 
-static void app_task_oled(void* pvParameters)//OLEDÏÔÊ¾
+static void app_task_oled(void* pvParameters)//OLEDæ˜¾ç¤º
 {
 	oled_t oled;
 	BaseType_t xReturn=pdFALSE;	
 	for(;;)
 	{
-		xReturn = xQueueReceive( g_queue_oled,	/* ÏûÏ¢¶ÓÁĞµÄ¾ä±ú */
-								&oled, 			/* µÃµ½µÄÏûÏ¢ÄÚÈİ */
-								portMAX_DELAY);	/* µÈ´ıÊ±¼äÒ»Ö±µÈ */
+		xReturn = xQueueReceive( g_queue_oled,	/* æ¶ˆæ¯é˜Ÿåˆ—çš„å¥æŸ„ */
+								&oled, 			/* å¾—åˆ°çš„æ¶ˆæ¯å†…å®¹ */
+								portMAX_DELAY);	/* ç­‰å¾…æ—¶é—´ä¸€ç›´ç­‰ */
 		if(xReturn != pdPASS)
 			continue;
 		
@@ -300,25 +300,25 @@ static void app_task_oled(void* pvParameters)//OLEDÏÔÊ¾
 		{
 			case OLED_CTRL_DISPLAY_ON:
 			{
-				/* ÁÁÆÁ */
+				/* äº®å± */
 				OLED_Display_On();
 			}break;
 
 			case OLED_CTRL_DISPLAY_OFF:
 			{
-				/* ÃğÆÁ */
+				/* ç­å± */
 				OLED_Display_Off();	
 			}break;
 
 			case OLED_CTRL_CLEAR:
 			{
-				/* ÇåÆÁ */
+				/* æ¸…å± */
 				OLED_Clear();
 			}break;
 
 			case OLED_CTRL_SHOW_STRING:
 			{
-				/* ÏÔÊ¾×Ö·û´® */
+				/* æ˜¾ç¤ºå­—ç¬¦ä¸² */
 				OLED_ShowString(oled.x,
 								oled.y,
 								oled.str,
@@ -328,7 +328,7 @@ static void app_task_oled(void* pvParameters)//OLEDÏÔÊ¾
 
 			case OLED_CTRL_SHOW_CHINESE:
 			{
-				/* ÏÔÊ¾ºº×Ö */
+				/* æ˜¾ç¤ºæ±‰å­— */
 				OLED_ShowCHinese(oled.x,
 								oled.y,
 								oled.chinese);
@@ -336,7 +336,7 @@ static void app_task_oled(void* pvParameters)//OLEDÏÔÊ¾
 
 			case OLED_CTRL_SHOW_PICTURE:
 			{
-				/* ÏÔÊ¾Í¼Æ¬ */
+				/* æ˜¾ç¤ºå›¾ç‰‡ */
 				OLED_DrawBMP(	oled.x,
 								oled.y,
 								oled.x+oled.pic_width,
@@ -350,7 +350,7 @@ static void app_task_oled(void* pvParameters)//OLEDÏÔÊ¾
 	}
 }   
 
-static void app_task_keyboard(void* pvParameters)//±¡Ä¤°´¼ü
+static void app_task_keyboard(void* pvParameters)//è–„è†œæŒ‰é”®
 {
 	u8   i=0;
 	char key_old=0;
@@ -366,14 +366,14 @@ static void app_task_keyboard(void* pvParameters)//±¡Ä¤°´¼ü
 	
 	BaseType_t 	xReturn=pdFALSE;
 	
-	char master_pw[9]={49,50,51,52,53,54,55,56,'\0'};//  1 2 3 4 5 6 7 8 ASCLLÂë
+	char master_pw[9]={49,50,51,52,53,54,55,56,'\0'};//  1 2 3 4 5 6 7 8 ASCLLç 
 	
 	xor_encryption(XOR_KEY,master_pw,master_xor,sizeof(master_pw));
 	for(;;)
 	{
 		switch(key_sta)
 		{
-			case 0://»ñÈ¡°´ÏÂµÄ°´¼ü
+			case 0://è·å–æŒ‰ä¸‹çš„æŒ‰é”®
 			{
 				key_cur = get_key_board();	
 
@@ -383,7 +383,7 @@ static void app_task_keyboard(void* pvParameters)//±¡Ä¤°´¼ü
 					key_sta=1;
 				}
 			}break;
-			case 1://È·ÈÏ°´ÏÂµÄ°´¼ü
+			case 1://ç¡®è®¤æŒ‰ä¸‹çš„æŒ‰é”®
 			{
 				key_cur = get_key_board();	
 				
@@ -391,21 +391,21 @@ static void app_task_keyboard(void* pvParameters)//±¡Ä¤°´¼ü
 				{
 					dgb_printf_safe("KEY %c Down\r\n",key_cur);
 					key_sta=2;
-					xEventGroupSetBits(g_event_group_beep,0x01);//·äÃùÆ÷
+					xEventGroupSetBits(g_event_group_beep,0x01);//èœ‚é¸£å™¨
 						
 					
-					if(key_cur == 'C')//ÇåÁã
+					if(key_cur == 'C')//æ¸…é›¶
 					{
-						dgb_printf_safe("ÃÜÂëÇå0\n");
+						dgb_printf_safe("å¯†ç æ¸…0\n");
 						for(i=0;i<8;i++)
 						{
 							password[i]=0;
 						}
 						i = 0;	
 					}
-					else if(key_cur == '*')//ÍËÒ»Î»ÃÜÂë
+					else if(key_cur == '*')//é€€ä¸€ä½å¯†ç 
 					{
-						dgb_printf_safe("ÃÜÂëÍËÎ»\n");
+						dgb_printf_safe("å¯†ç é€€ä½\n");
 						password[i]=0;
 						i--;
 					}
@@ -416,7 +416,7 @@ static void app_task_keyboard(void* pvParameters)//±¡Ä¤°´¼ü
 					}
 				}
 			}break;
-			case 2://»ñÈ¡ÊÍ·ÅµÄ°´¼ü
+			case 2://è·å–é‡Šæ”¾çš„æŒ‰é”®
 			{
 				key_cur = get_key_board();	
 					
@@ -432,12 +432,12 @@ static void app_task_keyboard(void* pvParameters)//±¡Ä¤°´¼ü
 		{
 			i=0;
 			
-			oled.ctrl=OLED_CTRL_CLEAR;					//ÇåÆÁ
+			oled.ctrl=OLED_CTRL_CLEAR;					//æ¸…å±
 			xQueueSend(g_queue_oled,&oled,100);	
 			
 			sprintf((char *)buf_pw,"pw:%s",password);
 			dgb_printf_safe("Input %s\r\n",buf_pw);
-			/* oledÏÔÊ¾ */
+			/* oledæ˜¾ç¤º */
 			oled.ctrl=OLED_CTRL_SHOW_STRING;
 			oled.x=16;
 			oled.y=3;
@@ -448,9 +448,9 @@ static void app_task_keyboard(void* pvParameters)//±¡Ä¤°´¼ü
 			
 			xor_decryption(XOR_KEY,master_xor,xor_er,sizeof(master_xor));
 			
-			if(memcmp(xor_er,password,8) == 0) //ÃÜÂë12345678
+			if(memcmp(xor_er,password,8) == 0) //å¯†ç 12345678
 			{	
-				oled.ctrl=OLED_CTRL_CLEAR;					//ÇåÆÁ
+				oled.ctrl=OLED_CTRL_CLEAR;					//æ¸…å±
 				xQueueSend(g_queue_oled,&oled,100);
 				sprintf((char *)buf_order,"Success!");
 				oled.ctrl=OLED_CTRL_SHOW_STRING;
@@ -461,13 +461,13 @@ static void app_task_keyboard(void* pvParameters)//±¡Ä¤°´¼ü
 				xReturn = xQueueSend(g_queue_oled,&oled,100);
 				if(xReturn != pdPASS) dgb_printf_safe("[app_task_rtc] xQueueSend oled string error code is %d\r\n",xReturn);
 				
-				xEventGroupSetBits(g_event_group_beep,0x04);//·äÃùÆ÷
+				xEventGroupSetBits(g_event_group_beep,0x04);//èœ‚é¸£å™¨
 				xEventGroupSetBits(g_event_group_led,0x01); //LED
 				xEventGroupSetBits(g_event_group_root,0x01); //root
 				vTaskDelay(2000);
 				
-				//¹ÜÀíÔ±½çÃæ
-				oled.ctrl=OLED_CTRL_CLEAR;					//ÇåÆÁ
+				//ç®¡ç†å‘˜ç•Œé¢
+				oled.ctrl=OLED_CTRL_CLEAR;					//æ¸…å±
 				xQueueSend(g_queue_oled,&oled,100);
 				
 				sprintf((char *)buf_order,"K2  Add Fpm");
@@ -507,16 +507,16 @@ static void app_task_keyboard(void* pvParameters)//±¡Ä¤°´¼ü
 				xReturn = xQueueSend(g_queue_oled,&oled,100);
 				if(xReturn != pdPASS) dgb_printf_safe("[app_task_rtc] xQueueSend oled string error code is %d\r\n",xReturn);
 			
-			}else //ÃÜÂë´íÎó
+			}else //å¯†ç é”™è¯¯
 			{
-				xEventGroupSetBits(g_event_group_beep,0x02);//·äÃùÆ÷
+				xEventGroupSetBits(g_event_group_beep,0x02);//èœ‚é¸£å™¨
 				xEventGroupSetBits(g_event_group_led,0x02); //LED
 				
-				oled.ctrl=OLED_CTRL_CLEAR;					//ÇåÆÁ
+				oled.ctrl=OLED_CTRL_CLEAR;					//æ¸…å±
 				xQueueSend(g_queue_oled,&oled,100);
 				xSemaphoreTake(g_mutex_oled,portMAX_DELAY);
 				sprintf((char *)buf_order,"Code Error!");
-				/* oledÏÔÊ¾ */
+				/* oledæ˜¾ç¤º */
 				oled.ctrl=OLED_CTRL_SHOW_STRING;
 				oled.x=24;
 				oled.y=4;
@@ -530,13 +530,13 @@ static void app_task_keyboard(void* pvParameters)//±¡Ä¤°´¼ü
 	}
 }   
 
-static void app_task_led(void* pvParameters)//LEDÈÎÎñ
+static void app_task_led(void* pvParameters)//LEDä»»åŠ¡
 {
 	EventBits_t led_event_bits=0;
 	for(;;)
 	{
 		led_event_bits=xEventGroupWaitBits(g_event_group_led,0xff,pdTRUE,pdFALSE,portMAX_DELAY);
-		if(led_event_bits & 0x01)//²Ù×÷ÕıÈ·
+		if(led_event_bits & 0x01)//æ“ä½œæ­£ç¡®
 		{
 			GPIO_ResetBits(GPIOF,GPIO_Pin_9  | GPIO_Pin_10);
 			GPIO_ResetBits(GPIOE,GPIO_Pin_13 | GPIO_Pin_14);			
@@ -544,7 +544,7 @@ static void app_task_led(void* pvParameters)//LEDÈÎÎñ
 			GPIO_SetBits(GPIOF,GPIO_Pin_9  | GPIO_Pin_10);
 			GPIO_SetBits(GPIOE,GPIO_Pin_13 | GPIO_Pin_14);
 		}
-		if(led_event_bits & 0x02)//²Ù×÷Ê§°Ü
+		if(led_event_bits & 0x02)//æ“ä½œå¤±è´¥
 		{
 			GPIO_ResetBits(GPIOF,GPIO_Pin_9  | GPIO_Pin_10);
 			GPIO_ResetBits(GPIOE,GPIO_Pin_13 | GPIO_Pin_14);			
@@ -557,7 +557,7 @@ static void app_task_led(void* pvParameters)//LEDÈÎÎñ
 }
 
 
-static void app_task_root(void* pvParameters)//¹ÜÀíÔ±
+static void app_task_root(void* pvParameters)//ç®¡ç†å‘˜
 {
 	oled_t	 	oled;
 	uint8_t 	fmp_error_code;
@@ -569,19 +569,19 @@ static void app_task_root(void* pvParameters)//¹ÜÀíÔ±
 	
 	for(;;)
 	{
-		/* °´¼üÊµÏÖÌí¼ÓÖ¸ÎÆ¡¢ÑéÖ¤Ö¸ÎÆ¡¢»ñÈ¡Ö¸ÎÆ×ÜÊı¡¢Çå¿ÕÖ¸ÎÆ */
+		/* æŒ‰é”®å®ç°æ·»åŠ æŒ‡çº¹ã€éªŒè¯æŒ‡çº¹ã€è·å–æŒ‡çº¹æ€»æ•°ã€æ¸…ç©ºæŒ‡çº¹ */
 		root_event_bits=xEventGroupWaitBits(g_event_group_root,0xff,pdTRUE,pdFALSE,portMAX_DELAY);
 		fpm_event_bits=xEventGroupWaitBits(g_event_group_fpm,0xff,pdTRUE,pdFALSE,portMAX_DELAY);
 		
-		/* Ìí¼ÓÖ¸ÎÆ */
+		/* æ·»åŠ æŒ‡çº¹ */
 		if((root_event_bits & 0x01) && (fpm_event_bits & 0x02))
 		{
 			fpm_ctrl_led(FPM_LED_BLUE);
-			dgb_printf_safe("--------Çë½«ÊÖÖ¸·Åµ½Ö¸ÎÆÄ£¿é´¥Ãş¸ĞÓ¦Çø--------\r\n");
+			dgb_printf_safe("--------è¯·å°†æ‰‹æŒ‡æ”¾åˆ°æŒ‡çº¹æ¨¡å—è§¦æ‘¸æ„Ÿåº”åŒº--------\r\n");
 			
-			oled.ctrl=OLED_CTRL_CLEAR;					//ÇåÆÁ
+			oled.ctrl=OLED_CTRL_CLEAR;					//æ¸…å±
 			xQueueSend(g_queue_oled,&oled,100);	
-			sprintf((char *)buf_order,"Add Fpm");	//ÏÔÊ¾ÃüÁî
+			sprintf((char *)buf_order,"Add Fpm");	//æ˜¾ç¤ºå‘½ä»¤
 			oled.ctrl=OLED_CTRL_SHOW_STRING;
 			oled.x=32;
 			oled.y=2;
@@ -595,18 +595,18 @@ static void app_task_root(void* pvParameters)//¹ÜÀíÔ±
 
             if(fmp_error_code == 0)
             {
-                dgb_printf_safe("»ñÈ¡Ö¸ÎÆ×ÜÊı£º%04d\r\n",id_total);
+                dgb_printf_safe("è·å–æŒ‡çº¹æ€»æ•°ï¼š%04d\r\n",id_total);
 				
-				/* Ìí¼ÓÖ¸ÎÆ*/
+				/* æ·»åŠ æŒ‡çº¹*/
 				fmp_error_code=fpm_enroll_auto(id_total+1);
 
 				if(fmp_error_code == 0)
 				{
 					fpm_ctrl_led(FPM_LED_GREEN);					
 					
-					dgb_printf_safe("×Ô¶¯×¢²áÖ¸ÎÆ³É¹¦\r\n");
+					dgb_printf_safe("è‡ªåŠ¨æ³¨å†ŒæŒ‡çº¹æˆåŠŸ\r\n");
 					
-					sprintf((char *)buf_order,"Add Success");	//ÏÔÊ¾ÃüÁî
+					sprintf((char *)buf_order,"Add Success");	//æ˜¾ç¤ºå‘½ä»¤
 					oled.ctrl=OLED_CTRL_SHOW_STRING;
 					oled.x=16;
 					oled.y=4;
@@ -616,14 +616,14 @@ static void app_task_root(void* pvParameters)//¹ÜÀíÔ±
 					if(xReturn != pdPASS)
 						dgb_printf_safe("[app_task_rtc] xQueueSend oled string error code is %d\r\n",xReturn);
 					
-					xEventGroupSetBits(g_event_group_beep,0x01);//·äÃùÆ÷	
+					xEventGroupSetBits(g_event_group_beep,0x01);//èœ‚é¸£å™¨	
 					xEventGroupSetBits(g_event_group_led,0x01); //LED					
 				}
 				else
 				{
 					fpm_ctrl_led(FPM_LED_RED);
 					
-					sprintf((char *)buf_order,"Failed");	//ÏÔÊ¾ÃüÁî
+					sprintf((char *)buf_order,"Failed");	//æ˜¾ç¤ºå‘½ä»¤
 					oled.ctrl=OLED_CTRL_SHOW_STRING;
 					oled.x=48;
 					oled.y=4;
@@ -633,7 +633,7 @@ static void app_task_root(void* pvParameters)//¹ÜÀíÔ±
 					if(xReturn != pdPASS)
 						dgb_printf_safe("[app_task_rtc] xQueueSend oled string error code is %d\r\n",xReturn);
 					
-					xEventGroupSetBits(g_event_group_beep,0x02);//·äÃùÆ÷
+					xEventGroupSetBits(g_event_group_beep,0x02);//èœ‚é¸£å™¨
 					xEventGroupSetBits(g_event_group_led,0x02); //LED
 				}
 				Delay_ms(100);	
@@ -644,15 +644,15 @@ static void app_task_root(void* pvParameters)//¹ÜÀíÔ±
             }
 		}
 		
-		/* »ñÈ¡ÓÃ»§×ÜÊı */
+		/* è·å–ç”¨æˆ·æ€»æ•° */
 		if((root_event_bits & 0x01) && (fpm_event_bits & 0x04))
 		{
 			fpm_ctrl_led(FPM_LED_BLUE);
 			
 			dgb_printf_safe("\n========================================\r\n");
-			oled.ctrl=OLED_CTRL_CLEAR;					//ÇåÆÁ
+			oled.ctrl=OLED_CTRL_CLEAR;					//æ¸…å±
 			xQueueSend(g_queue_oled,&oled,100);	
-			sprintf((char *)buf_order,"Fpm Num");	//ÏÔÊ¾ÃüÁî
+			sprintf((char *)buf_order,"Fpm Num");	//æ˜¾ç¤ºå‘½ä»¤
 			oled.ctrl=OLED_CTRL_SHOW_STRING;
 			oled.x=32;
 			oled.y=2;
@@ -668,40 +668,40 @@ static void app_task_root(void* pvParameters)//¹ÜÀíÔ±
             {
 				fpm_ctrl_led(FPM_LED_GREEN);
 				
-                dgb_printf_safe("»ñÈ¡Ö¸ÎÆ×ÜÊı£º%04d\r\n",id_total);
+                dgb_printf_safe("è·å–æŒ‡çº¹æ€»æ•°ï¼š%04d\r\n",id_total);
                 
-				sprintf((char *)buf_order,"Num:%04d",id_total);	//ÏÔÊ¾ÃüÁî
+				sprintf((char *)buf_order,"Num:%04d",id_total);	//æ˜¾ç¤ºå‘½ä»¤
 				oled.ctrl=OLED_CTRL_SHOW_STRING;
 				oled.x=32;
 				oled.y=4;
 				oled.str=buf_order;
 				oled.font_size=16;
-				xReturn = xQueueSend( 	g_queue_oled,/* ÏûÏ¢¶ÓÁĞµÄ¾ä±ú */
-										&oled,	/* ·¢ËÍµÄÏûÏ¢ÄÚÈİ */
-										100);		/* µÈ´ıÊ±¼ä 100 Tick */				
+				xReturn = xQueueSend( 	g_queue_oled,/* æ¶ˆæ¯é˜Ÿåˆ—çš„å¥æŸ„ */
+										&oled,	/* å‘é€çš„æ¶ˆæ¯å†…å®¹ */
+										100);		/* ç­‰å¾…æ—¶é—´ 100 Tick */				
 				if(xReturn != pdPASS)
 					dgb_printf_safe("[app_task_rtc] xQueueSend oled string error code is %d\r\n",xReturn);
 				
-                xEventGroupSetBits(g_event_group_beep,0x01);//·äÃùÆ÷
+                xEventGroupSetBits(g_event_group_beep,0x01);//èœ‚é¸£å™¨
 				xEventGroupSetBits(g_event_group_led,0x01); //LED
             }
 			else
 			{
 				fpm_ctrl_led(FPM_LED_RED);
 				
-				sprintf((char *)buf_order,"Failed");	//ÏÔÊ¾ÃüÁî
+				sprintf((char *)buf_order,"Failed");	//æ˜¾ç¤ºå‘½ä»¤
 				oled.ctrl=OLED_CTRL_SHOW_STRING;
 				oled.x=32;
 				oled.y=4;
 				oled.str=buf_order;
 				oled.font_size=16;
-				xReturn = xQueueSend( 	g_queue_oled,/* ÏûÏ¢¶ÓÁĞµÄ¾ä±ú */
-										&oled,	/* ·¢ËÍµÄÏûÏ¢ÄÚÈİ */
-										100);		/* µÈ´ıÊ±¼ä 100 Tick */				
+				xReturn = xQueueSend( 	g_queue_oled,/* æ¶ˆæ¯é˜Ÿåˆ—çš„å¥æŸ„ */
+										&oled,	/* å‘é€çš„æ¶ˆæ¯å†…å®¹ */
+										100);		/* ç­‰å¾…æ—¶é—´ 100 Tick */				
 				if(xReturn != pdPASS)
 					dgb_printf_safe("[app_task_rtc] xQueueSend oled string error code is %d\r\n",xReturn);
 				
-				xEventGroupSetBits(g_event_group_beep,0x02);//·äÃùÆ÷
+				xEventGroupSetBits(g_event_group_beep,0x02);//èœ‚é¸£å™¨
 				xEventGroupSetBits(g_event_group_led,0x02); //LED
 			}			
 			
@@ -713,23 +713,23 @@ static void app_task_root(void* pvParameters)//¹ÜÀíÔ±
 		}	
 
 		
-		/* Çå¿ÕÖ¸ÎÆ */
+		/* æ¸…ç©ºæŒ‡çº¹ */
 		if((root_event_bits & 0x01) && (fpm_event_bits & 0x08))
 		{
 			fpm_ctrl_led(FPM_LED_BLUE);
 			
 			dgb_printf_safe("\n========================================\r\n");
-			oled.ctrl=OLED_CTRL_CLEAR;					//ÇåÆÁ
+			oled.ctrl=OLED_CTRL_CLEAR;					//æ¸…å±
 			xQueueSend(g_queue_oled,&oled,100);	
-			sprintf((char *)buf_order,"Del All");	//ÏÔÊ¾ÃüÁî
+			sprintf((char *)buf_order,"Del All");	//æ˜¾ç¤ºå‘½ä»¤
 			oled.ctrl=OLED_CTRL_SHOW_STRING;
 			oled.x=32;
 			oled.y=2;
 			oled.str=buf_order;
 			oled.font_size=16;
-			xReturn = xQueueSend( 	g_queue_oled,/* ÏûÏ¢¶ÓÁĞµÄ¾ä±ú */
-									&oled,	/* ·¢ËÍµÄÏûÏ¢ÄÚÈİ */
-									100);		/* µÈ´ıÊ±¼ä 100 Tick */				
+			xReturn = xQueueSend( 	g_queue_oled,/* æ¶ˆæ¯é˜Ÿåˆ—çš„å¥æŸ„ */
+									&oled,	/* å‘é€çš„æ¶ˆæ¯å†…å®¹ */
+									100);		/* ç­‰å¾…æ—¶é—´ 100 Tick */				
 			if(xReturn != pdPASS)
 				dgb_printf_safe("[app_task_rtc] xQueueSend oled string error code is %d\r\n",xReturn);
 			
@@ -738,40 +738,40 @@ static void app_task_root(void* pvParameters)//¹ÜÀíÔ±
             {
 				fpm_ctrl_led(FPM_LED_GREEN);
 				
-                dgb_printf_safe("Çå¿ÕÖ¸ÎÆ³É¹¦\r\n");
+                dgb_printf_safe("æ¸…ç©ºæŒ‡çº¹æˆåŠŸ\r\n");
 				
-				sprintf((char *)buf_order,"Del Success");	//ÏÔÊ¾ÃüÁî
+				sprintf((char *)buf_order,"Del Success");	//æ˜¾ç¤ºå‘½ä»¤
 				oled.ctrl=OLED_CTRL_SHOW_STRING;
 				oled.x=16;
 				oled.y=4;
 				oled.str=buf_order;
 				oled.font_size=16;
-				xReturn = xQueueSend( 	g_queue_oled,/* ÏûÏ¢¶ÓÁĞµÄ¾ä±ú */
-										&oled,	/* ·¢ËÍµÄÏûÏ¢ÄÚÈİ */
-										100);		/* µÈ´ıÊ±¼ä 100 Tick */				
+				xReturn = xQueueSend( 	g_queue_oled,/* æ¶ˆæ¯é˜Ÿåˆ—çš„å¥æŸ„ */
+										&oled,	/* å‘é€çš„æ¶ˆæ¯å†…å®¹ */
+										100);		/* ç­‰å¾…æ—¶é—´ 100 Tick */				
 				if(xReturn != pdPASS)
 					dgb_printf_safe("[app_task_rtc] xQueueSend oled string error code is %d\r\n",xReturn);
                 
-                xEventGroupSetBits(g_event_group_beep,0x01);//·äÃùÆ÷
+                xEventGroupSetBits(g_event_group_beep,0x01);//èœ‚é¸£å™¨
 				xEventGroupSetBits(g_event_group_led,0x01); //LED
             }
 			else
 			{
 				fpm_ctrl_led(FPM_LED_RED);
 				
-				sprintf((char *)buf_order,"Failed");	//ÏÔÊ¾ÃüÁî
+				sprintf((char *)buf_order,"Failed");	//æ˜¾ç¤ºå‘½ä»¤
 				oled.ctrl=OLED_CTRL_SHOW_STRING;
 				oled.x=32;
 				oled.y=4;
 				oled.str=buf_order;
 				oled.font_size=16;
-				xReturn = xQueueSend( 	g_queue_oled,/* ÏûÏ¢¶ÓÁĞµÄ¾ä±ú */
-										&oled,	/* ·¢ËÍµÄÏûÏ¢ÄÚÈİ */
-										100);		/* µÈ´ıÊ±¼ä 100 Tick */				
+				xReturn = xQueueSend( 	g_queue_oled,/* æ¶ˆæ¯é˜Ÿåˆ—çš„å¥æŸ„ */
+										&oled,	/* å‘é€çš„æ¶ˆæ¯å†…å®¹ */
+										100);		/* ç­‰å¾…æ—¶é—´ 100 Tick */				
 				if(xReturn != pdPASS)
 					dgb_printf_safe("[app_task_rtc] xQueueSend oled string error code is %d\r\n",xReturn);
 				
-				xEventGroupSetBits(g_event_group_beep,0x02);//·äÃùÆ÷
+				xEventGroupSetBits(g_event_group_beep,0x02);//èœ‚é¸£å™¨
 				xEventGroupSetBits(g_event_group_led,0x02); //LED
 			}			
 			Delay_ms(100);		
@@ -783,7 +783,7 @@ static void app_task_root(void* pvParameters)//¹ÜÀíÔ±
 	}
 }  
 
-static void app_task_atte(void* pvParameters)//¿¼ÇÚ
+static void app_task_atte(void* pvParameters)//è€ƒå‹¤
 {
 	oled_t	 	oled;
 	uint8_t 	fmp_error_code;
@@ -794,17 +794,17 @@ static void app_task_atte(void* pvParameters)//¿¼ÇÚ
 	for(;;)
 	{
 		fpm_event_bits=xEventGroupWaitBits(g_event_group_fpm,0x01,pdTRUE,pdFALSE,portMAX_DELAY);
-		/* Ë¢Ö¸ÎÆ */
+		/* åˆ·æŒ‡çº¹ */
 		if(fpm_event_bits & 0x01)
 		{
 			fpm_ctrl_led(FPM_LED_BLUE);
 			
 			dgb_printf_safe("\n============================================\r\n");
-			dgb_printf_safe("Çë½«ÊÖÖ¸·Åµ½Ö¸ÎÆÄ£¿é´¥Ãş¸ĞÓ¦Çø\r\n");
+			dgb_printf_safe("è¯·å°†æ‰‹æŒ‡æ”¾åˆ°æŒ‡çº¹æ¨¡å—è§¦æ‘¸æ„Ÿåº”åŒº\r\n");
 			
-			oled.ctrl=OLED_CTRL_CLEAR;					//ÇåÆÁ
+			oled.ctrl=OLED_CTRL_CLEAR;					//æ¸…å±
 			xQueueSend(g_queue_oled,&oled,100);	
-			sprintf((char *)buf_order,"Mod Fpm");	//ÏÔÊ¾ÃüÁî
+			sprintf((char *)buf_order,"Mod Fpm");	//æ˜¾ç¤ºå‘½ä»¤
 			oled.ctrl=OLED_CTRL_SHOW_STRING;
 			oled.x=32;
 			oled.y=2;
@@ -816,7 +816,7 @@ static void app_task_atte(void* pvParameters)//¿¼ÇÚ
 			if(xReturn != pdPASS)
 				dgb_printf_safe("[app_task_rtc] xQueueSend oled string error code is %d\r\n",xReturn);
 			
-			/* ²ÎÊıÎª0xFFFF½øĞĞ1:NÆ¥Åä */
+			/* å‚æ•°ä¸º0xFFFFè¿›è¡Œ1:NåŒ¹é… */
 			id = 0xFFFF;
 			
 			fmp_error_code=fpm_idenify_auto(&id);
@@ -825,9 +825,9 @@ static void app_task_atte(void* pvParameters)//¿¼ÇÚ
             {
 				fpm_ctrl_led(FPM_LED_GREEN);
 				
-                dgb_printf_safe("%04d¿¼ÇÚ³É¹¦!\r\n",id);
+                dgb_printf_safe("%04dè€ƒå‹¤æˆåŠŸ!\r\n",id);
 					
-				sprintf((char *)buf_order,"%04d Attend",id);	//ÏÔÊ¾ÃüÁî
+				sprintf((char *)buf_order,"%04d Attend",id);	//æ˜¾ç¤ºå‘½ä»¤
 				sprintf((char *)att_buf,"%04d Attend",id);	
 				oled.ctrl=OLED_CTRL_SHOW_STRING;
 				oled.x=16;
@@ -838,14 +838,14 @@ static void app_task_atte(void* pvParameters)//¿¼ÇÚ
 				if(xReturn != pdPASS)
 					dgb_printf_safe("[app_task_rtc] xQueueSend oled string error code is %d\r\n",xReturn);
 				
-                xEventGroupSetBits(g_event_group_beep,0x01);//·äÃùÆ÷
+                xEventGroupSetBits(g_event_group_beep,0x01);//èœ‚é¸£å™¨
 				xEventGroupSetBits(g_event_group_led,0x01); //LED
             }
 			else
 			{
 				fpm_ctrl_led(FPM_LED_RED);
 				
-				sprintf((char *)buf_order,"Failed");	//ÏÔÊ¾ÃüÁî
+				sprintf((char *)buf_order,"Failed");	//æ˜¾ç¤ºå‘½ä»¤
 				oled.ctrl=OLED_CTRL_SHOW_STRING;
 				oled.x=36;
 				oled.y=4;
@@ -855,7 +855,7 @@ static void app_task_atte(void* pvParameters)//¿¼ÇÚ
 				if(xReturn != pdPASS)
 					dgb_printf_safe("[app_task_rtc] xQueueSend oled string error code is %d\r\n",xReturn);
 				
-				xEventGroupSetBits(g_event_group_beep,0x02);//·äÃùÆ÷
+				xEventGroupSetBits(g_event_group_beep,0x02);//èœ‚é¸£å™¨
 				xEventGroupSetBits(g_event_group_led,0x02); //LED
 			}
 			
@@ -869,21 +869,21 @@ static void app_task_atte(void* pvParameters)//¿¼ÇÚ
 	}
 }	
 
-static void app_task_beep(void* pvParameters)//·äÃùÆ÷ÈÎÎñ
+static void app_task_beep(void* pvParameters)//èœ‚é¸£å™¨ä»»åŠ¡
 {
 	EventBits_t beep_event_bits=0;
 	for(;;)
 	{
 		beep_event_bits=xEventGroupWaitBits(g_event_group_beep,0xff,pdTRUE,pdFALSE,portMAX_DELAY);
-		if(beep_event_bits & 0x01)//°´¼üÉùÒô
+		if(beep_event_bits & 0x01)//æŒ‰é”®å£°éŸ³
 		{
 			beep_on();Delay_ms(50);beep_off();
 		}
-		if(beep_event_bits & 0x02)//°´¼üÊ§°Ü
+		if(beep_event_bits & 0x02)//æŒ‰é”®å¤±è´¥
 		{
 			beep_on();Delay_ms(500);beep_off();
 		}
-		if(beep_event_bits & 0x04)//°´¼ü³É¹¦
+		if(beep_event_bits & 0x04)//æŒ‰é”®æˆåŠŸ
 		{
 			beep_on();Delay_ms(50);beep_off();Delay_ms(50);
 			beep_on();Delay_ms(50);beep_off();
@@ -899,7 +899,7 @@ static void app_task_rtc(void* pvParameters)//rtc_flash
 			
 	for(;;)
 	{
-		//µÈ´ıÊÂ¼ş±êÖ¾×éÖÃÎ»
+		//ç­‰å¾…äº‹ä»¶æ ‡å¿—ç»„ç½®ä½
 		event_bits_rtc=xEventGroupWaitBits(g_event_group_rtc,0x0f,pdTRUE,pdFALSE,portMAX_DELAY);
 		if((event_bits_rtc & 0x01) && (strstr((const char *)att_buf,"Attend")))
 		{
@@ -908,33 +908,33 @@ static void app_task_rtc(void* pvParameters)//rtc_flash
 				
 //				if(strstr((const char *)att_buf,"Attend"))
 //				{
-						// »ñÈ¡ÈÕÆÚ
+						// è·å–æ—¥æœŸ
 					RTC_GetDate(RTC_Format_BCD,&RTC_DateStructure);
 					
-					// »ñÈ¡Ê±¼ä
+					// è·å–æ—¶é—´
 					RTC_GetTime(RTC_Format_BCD, &RTC_TimeStructure);
 					
 					printf(" 20%02x/%02x/%02x Week:%x %02x:%02x:%02x\r\n", \
 										
 										RTC_DateStructure.RTC_Year, RTC_DateStructure.RTC_Month, RTC_DateStructure.RTC_Date,RTC_DateStructure.RTC_WeekDay,\
 										RTC_TimeStructure.RTC_Hours, RTC_TimeStructure.RTC_Minutes, RTC_TimeStructure.RTC_Seconds);
-					//¸ñÊ½»¯×Ö·û´®,Ä©Î²Ìí¼Ó\r\n×÷ÎªÒ»¸ö½áÊø±ê¼Ç£¬·½±ãÎÒÃÇ¶ÁÈ¡µÄÊ±ºò½øĞĞÅĞ¶Ï
+					//æ ¼å¼åŒ–å­—ç¬¦ä¸²,æœ«å°¾æ·»åŠ \r\nä½œä¸ºä¸€ä¸ªç»“æŸæ ‡è®°ï¼Œæ–¹ä¾¿æˆ‘ä»¬è¯»å–çš„æ—¶å€™è¿›è¡Œåˆ¤æ–­
 					sprintf((char *)save_buf,"[%s] 20%02x/%02x/%02x Week:%x %02x:%02x:%02x\r\n", \
 									att_buf,\
 									RTC_DateStructure.RTC_Year, RTC_DateStructure.RTC_Month, RTC_DateStructure.RTC_Date,RTC_DateStructure.RTC_WeekDay,\
 									RTC_TimeStructure.RTC_Hours, RTC_TimeStructure.RTC_Minutes, RTC_TimeStructure.RTC_Seconds);
-					//Ğ´ÈëÎÂÊª¶È¼ÇÂ¼
+					//å†™å…¥æ¸©æ¹¿åº¦è®°å½•
 					if(0==flash_write_record(save_buf,rec_cnt))
 					{
-						//ÏÔÊ¾
+						//æ˜¾ç¤º
 						dgb_printf_safe("input ---%s",save_buf);					
 
-						//¼ÇÂ¼×Ô¼Ó1
+						//è®°å½•è‡ªåŠ 1
 						rec_cnt++;						
 					}
 					else
 					{
-						//Êı¾İ¼ÇÂ¼ÇåÁã£¬ÖØÍ·¿ªÊ¼´æ´¢Êı¾İ
+						//æ•°æ®è®°å½•æ¸…é›¶ï¼Œé‡å¤´å¼€å§‹å­˜å‚¨æ•°æ®
 						rec_cnt=0;
 					}
 				//}
@@ -943,7 +943,7 @@ static void app_task_rtc(void* pvParameters)//rtc_flash
 			}
 			else
 			{
-				//³¬¹ı100Ìõ¼ÇÂ¼Ôò´òÓ¡
+				//è¶…è¿‡100æ¡è®°å½•åˆ™æ‰“å°
 				dgb_printf_safe("The record has reached 100 and cannot continue writing\r\n");
 			}
 			memset(att_buf,0,sizeof(att_buf));
@@ -953,7 +953,7 @@ static void app_task_rtc(void* pvParameters)//rtc_flash
 	}
 }   
 
-static void app_task_mod(void* pvParameters)//ĞŞ¸ÄÊ±¼ä
+static void app_task_mod(void* pvParameters)//ä¿®æ”¹æ—¶é—´
 {
 	uint8_t 	  rt;
 	oled_t		  oled;
@@ -982,7 +982,7 @@ static void app_task_mod(void* pvParameters)//ĞŞ¸ÄÊ±¼ä
 			RTC_SetDate(RTC_Format_BCD, &RTC_DateStructure);	
 			vTaskResume(app_task_rtc_handle);
 			memset((void *)rtc_buf,0,sizeof(rtc_buf));
-			oled.ctrl=OLED_CTRL_CLEAR;					//ÇåÆÁ
+			oled.ctrl=OLED_CTRL_CLEAR;					//æ¸…å±
 			xQueueSend(g_queue_oled,&oled,100);
 			
 			sprintf((char *)buf_order,"Mod Date Success");
@@ -996,7 +996,7 @@ static void app_task_mod(void* pvParameters)//ĞŞ¸ÄÊ±¼ä
 			vTaskDelay(1000);
 			memset(&oled,0,sizeof(oled));
 			
-			xEventGroupSetBits(g_event_group_beep,0x04);//·äÃùÆ÷
+			xEventGroupSetBits(g_event_group_beep,0x04);//èœ‚é¸£å™¨
 			xEventGroupSetBits(g_event_group_led,0x01); //LED
 				
 		}
@@ -1009,7 +1009,7 @@ static void app_task_mod(void* pvParameters)//ĞŞ¸ÄÊ±¼ä
 			RTC_TimeStructure.RTC_Seconds = ((second/10) << 4)+second % 10; 
 			RTC_SetTime(RTC_Format_BCD, &RTC_TimeStructure); 
 			memset((void *)rtc_buf,0,sizeof(rtc_buf));
-			oled.ctrl=OLED_CTRL_CLEAR;					//ÇåÆÁ
+			oled.ctrl=OLED_CTRL_CLEAR;					//æ¸…å±
 			xQueueSend(g_queue_oled,&oled,100);
 			
 			sprintf((char *)buf_order,"Mod Time Success");
@@ -1023,7 +1023,7 @@ static void app_task_mod(void* pvParameters)//ĞŞ¸ÄÊ±¼ä
 			vTaskDelay(1000);
 			memset(&oled,0,sizeof(oled));
 			
-			xEventGroupSetBits(g_event_group_beep,0x04);//·äÃùÆ÷
+			xEventGroupSetBits(g_event_group_beep,0x04);//èœ‚é¸£å™¨
 			xEventGroupSetBits(g_event_group_led,0x01); //LED
 		}
 		else
@@ -1045,19 +1045,19 @@ static void app_task_show(void* pvParameters)
 		{
 			for(i=0;i<100;i++)
 			{
-				//»ñÈ¡´æ´¢µÄ¼ÇÂ¼
+				//è·å–å­˜å‚¨çš„è®°å½•
 				flash_read_record(save_buf,i);
 				
-				//¼ì²é¼ÇÂ¼ÊÇ·ñ´æÔÚ»»ĞĞ·ûºÅ£¬²»´æÔÚÔò²»´òÓ¡Êä³ö
+				//æ£€æŸ¥è®°å½•æ˜¯å¦å­˜åœ¨æ¢è¡Œç¬¦å·ï¼Œä¸å­˜åœ¨åˆ™ä¸æ‰“å°è¾“å‡º
 				if(strstr(save_buf,"\n")==0)
 					break;		
 				
-				//´òÓ¡¼ÇÂ¼
+				//æ‰“å°è®°å½•
 				dgb_printf_safe("record[%d]  %s",i,save_buf);
 				
 			}
 			
-			//Èç¹ûiµÈÓÚ0£¬´ú±íÃ»ÓĞÒ»Ìõ¼ÇÂ¼
+			//å¦‚æœiç­‰äº0ï¼Œä»£è¡¨æ²¡æœ‰ä¸€æ¡è®°å½•
 			if(i==0)
 			{
 				dgb_printf_safe("There is no record\r\n");
@@ -1065,12 +1065,12 @@ static void app_task_show(void* pvParameters)
 		}
 		else if(strstr((char *)flash_buf,"clear"))
 		{
-			//ÉÈÇø²Á³ı
+			//æ‰‡åŒºæ“¦é™¤
 			flash_erase_record();
 			
 			dgb_printf_safe("Empty all data records successfully\r\n");
 			
-			//ÇåÁã¼ÇÂ¼¼ÆÊıÖµ
+			//æ¸…é›¶è®°å½•è®¡æ•°å€¼
 			rec_cnt=0;
 											
 		}
